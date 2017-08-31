@@ -10,6 +10,9 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
+  "bin": {
+    "auc": "./config/auc.js"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "^4.0.0",
@@ -22,6 +25,8 @@
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
     "bootstrap": "^3.3.7",
+    "chalk": "^2.1.0",
+    "commander": "^2.9.0",
     "core-js": "^2.4.1",
     "jquery": "^3.2.1",
     "rxjs": "^5.4.1",
@@ -48,6 +53,8 @@
     "protractor": "~5.1.2",
     "ts-node": "~3.0.4",
     "tslint": "~5.3.2",
-    "typescript": "~2.3.3"
+    "commander": "2.9.0",
+    "typescript": "~2.3.3",
+    "chalk": "1.1.3"
   }
 }
