@@ -12,13 +12,25 @@
     </p>
 </div>
 </div>
-<div class="well">   
+<div class="well"> 
+    <div>   
+        <button class="btn btn-success" (click)="isCommentHidden=!isCommentHidden">
+            发表评论
+        </button>
+    </div>
+    <div [hidden]="isCommentHidden"> 
+            <div>   <app-starts [(rating)]="newRating" [readonly]="false"></app-starts></div>  
+    <textarea [(ngModel)]="newComment"></textarea>    
+    <div>   
+        <button  class="btn" (click)="addComment()">  提交 </button>
+    </div>
+    </div>
 <div class="row"*ngFor="let comment of comments">   
 <hr>    
 <div class="col-md-12">
 <app-starts [rating]="comment.rating"></app-starts>
 <span class="pull-right"> {{comment.timestamp}} </span>
-<p></p>
+<p>{{comment.user}}</p>
 <p>{{comment.content}}</p>
 </div>
 </div>
