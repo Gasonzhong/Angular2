@@ -35,6 +35,7 @@ const routeConfig:Routes=[
   imports: [
     BrowserModule,
     RouterModule.forRoot(routeConfig),
+    FormsModule,
      ReactiveFormsModule,
      FormsModule
   ], 
