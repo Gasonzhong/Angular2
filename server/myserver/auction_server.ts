@@ -1,5 +1,5 @@
 import * as express from 'express'
-
+import {Server}  from 'ws'
 const app=express();
 export class Product {
     constructor(
@@ -32,3 +32,8 @@ const products:Product[] = [
             new Product(5, '第五个商品', 6.99, 2.5, '这是第五个商品', ['电子产品']),
               new Product(6, '第六个商品', 2.99, 3.5, '这是第六个商品', ['图书']),
   ];
+//websocket
+  const wsServer=new Server({port:8085});
+  wsServer.on("connection",websocket=>{
+      websocket.send("这是消息是服务器主动推送");
+  })
