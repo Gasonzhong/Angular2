@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from "../shared/product.service";
 import { FormControl } from "@angular/forms";
 import'rxjs/Rx'
+import { Observable } from "rxjs/Rx";
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -9,7 +10,7 @@ import'rxjs/Rx'
 })
 export class ProductComponent implements OnInit {
 
-private  products: Product[];
+private  products: Observable<Product[]>;
 private  imgUrl = 'http://placehold.it/320x150';
 private keyWord:string;
 private titleFilter:FormControl=new FormControl();

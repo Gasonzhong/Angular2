@@ -16,9 +16,14 @@ isCommentHidden=true;
   private productService:ProductService) { }
   ngOnInit() {
 
-    let productId:number=this.routeIngo.snapshot.params["productId"];
-    this.product=this.productService.getProduct(productId);
-     this.comments=this.productService.getCommentsForProductId(productId);
+  let productId:number=this.routeIngo.snapshot.params["productId"];
+ this.productService.getProduct(productId).subscribe(
+product=>this.product=product
+);
+// 自定义订阅
+this.productService.getCommentsForProductId(productId).subscribe(
+     comments=>this.comments=comments
+)
   }
 
   addComment(){

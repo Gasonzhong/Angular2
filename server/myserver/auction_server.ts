@@ -11,16 +11,32 @@ export class Product {
       public categories: Array<string>
     ) {}
   }
+  export class Comment{
+    constructor(
+      public id:number,
+      public productId:number,
+      public  timestamp:string,
+      public user:string,
+      public rating:number,
+      public content:string
+    ){}
+  }
+  
 app.get('/',(req,res)=>{
     res.send("Hello Express");
 })
 
-app.get('/products',(req,res)=>{
+app.get('/api/products',(req,res)=>{
 res.json(products);
 })
-app.get('/products/:id',(req,res)=>{
-    res.json(products.find((product)=>product.id==req.params.id));
+app.get('/api/products/:id/comments',(req,res)=>{
+    res.json(comments.filter((comments:Comment)=>comments.productId==req.params.id));
 })
+
+app.get('/api/products/:id',(req,res)=>{
+  res.json(products.find((product)=>product.id==req.params.id));
+})
+
 const server=app.listen(8000,'localhost',()=>{
     console.log("服务器已启动，地址是：http://localhost:8000")
 })
@@ -32,8 +48,17 @@ const products:Product[] = [
             new Product(5, '第五个商品', 6.99, 2.5, '这是第五个商品', ['电子产品']),
               new Product(6, '第六个商品', 2.99, 3.5, '这是第六个商品', ['图书']),
   ];
+  
+  const comments:Comment[]=[
+    new Comment(1,1,"2017-02-02 22:22:32","张三",3,"东西不错"),
+     new Comment(2,1,"2017-02-01 22:52:22","张四",2,"东西不错的地方分"),
+      new Comment(3,1,"2017-03-02 12:22:22","张六",3,"东西放到不错地方"),
+       new Comment(4,2,"2017-01-02 22:27:22","张三",3,"东西放到 不错"),
+
+  ]
 //websocket
   const wsServer=new Server({port:8085});
   wsServer.on("connection",websocket=>{
       websocket.send("这是消息是服务器主动推送");
   })
+
