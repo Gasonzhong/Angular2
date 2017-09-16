@@ -24,6 +24,10 @@ value=>this.keyWord=value
 
   ngOnInit() {
     this.products = this.productService.getProducts();
+    //订阅事件
+    this.productService.searchEvent.subscribe(
+   params=>this.products=this.productService.search(params)
+    );
   }
 
 }

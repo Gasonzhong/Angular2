@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import{Observable}from "rxjs";
 import{Http} from"@angular/http"
 import "rxjs/Rx"
 @Injectable()
 export class ProductService {
 
+ searchEvent:EventEmitter<ProductSearchParams>=new EventEmitter();
  
-  constructor(private http:Http) { }
+ constructor(private http:Http) { }
 
   getAllCategories():string[]{
     return ['电子产品','硬件设备','图书'];
@@ -22,8 +23,23 @@ getCommentsForProductId(id:number):Observable<Comment[]>{
  
   return this.http.get("/api/product/"+id+"/comments").map(res=>res.json());
 }
+
+  //搜索
+  search(params:ProductSearchParams):Observable<Product[]>{
+    return this.http.get("/api/products",{search:this.encodeParams}).map(res=>res.json());
+  }
+  private encodeParams(params:ProductSearchParams){
+    return Object.keys(params)
+    .filter(key=>params[key])
+    .reduce((sum:URLSearchParams,key:string)=>{
+      sum.append(key,params[key]);
+      return sum;
+    },new URLSearchParams());
+  
+    }
 }
 export class Product {
+  http: any;
   constructor(
     public id: number,
     public title: string,
@@ -32,8 +48,19 @@ export class Product {
     public desc: string,
     public categories: Array<string>
   ) {}
+
+
+  
+
 }
 
+export class ProductSearchParams{
+  constructor(
+    public title:string,
+    public price:number,
+    public category:string
+  ){}
+}
 export class Comment{
   constructor(
     public id:number,
