@@ -70,8 +70,37 @@ const products:Product[] = [
 
   ]
 //websocket
-  const wsServer=new Server({port:8085});
+const subscriptions=new Map<any,number[]>();
+  const wsServer=new Server({port:8000});
   wsServer.on("connection",websocket=>{
-      websocket.send("这是消息是服务器主动推送");
-  })
+      websocket.on('message',message=>{
+        let messageobj:string=message as string;
+       let messageObj=JSON.parse(messageobj);
+       let productIds=subscriptions.get(websocket);
+subscriptions.set(websocket,[...productIds,messageObj.productId])
+      });
+  });
 
+  const currentBids=new Map<number,number>();
+ setInterval(()=>{
+ products.forEach(
+   p=>{
+     let currentBid=this.currentBids.get(p.id)||p.price;
+     let newBid=currentBid+Math.random()*5;
+     currentBid.set(p.id,newBid);
+   }
+ );
+subscriptions.forEach((productIds:number[],ws)=>{
+  if (ws.readyState===1) {
+    
+    let newBids=productIds.map(pid=>({
+      
+      productId:pid,
+      bid:currentBids.get(pid)
+    }));
+    ws.send(JSON.stringify(newBids));
+  } else {
+    subscriptions.delete(ws)
+  }
+})
+ },2000)

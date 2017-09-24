@@ -15,6 +15,7 @@ import { ProductService } from "./shared/product.service";
 import { FilterPipe } from './pipe/filter.pipe';
 import{ FormsModule, ReactiveFormsModule}from '@angular/forms'
 import { HttpModule } from "@angular/http";
+import { WebSocketService } from "./shared/web-socket.service";
 
 const routeConfig:Routes=[
   {path:'',component:HomeComponent},
@@ -42,7 +43,7 @@ const routeConfig:Routes=[
      ReactiveFormsModule,
      FormsModule
   ], 
-  providers: [ProductService],
+  providers: [ProductService,WebSocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
